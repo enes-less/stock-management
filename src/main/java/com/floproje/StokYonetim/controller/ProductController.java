@@ -29,4 +29,14 @@ public class ProductController {
     //findProductById
     //ipucu @GetMapping("/{id}"),
     //parametre olarak @PathVariable Long id
+    // findProductById
+@GetMapping("/{id}")
+public ResponseEntity<ProductCreateResponseDTO> findProductById(@PathVariable Long id) {
+    ProductCreateResponseDTO product = productService.findProductById(id);
+    if (product != null) {
+        return ResponseEntity.ok(product);
+    } else {
+        return ResponseEntity.notFound().build();
+    }
+}
 }
