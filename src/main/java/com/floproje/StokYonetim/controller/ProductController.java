@@ -29,4 +29,8 @@ public class ProductController {
     //findProductById
     //ipucu @GetMapping("/{id}"),
     //parametre olarak @PathVariable Long id
+    @GetMapping("/{id}")
+public ResponseEntity<ProductCreateResponseDTO> findProductById(@PathVariable Long id) {
+    return ResponseEntity.ok(productService.findProductById(id));
+}
 }
