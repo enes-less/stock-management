@@ -40,4 +40,13 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository2;
     */
+   // (productcontroller için findproductbyid metodu)
+    public ProductCreateResponseDTO findProductById(Long id) {
+        // Optional + orElseThrow kullanılıyor, null check gerek yok
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product bulunamadı: " + id));
+
+        return productMapper.mapProductToProductCreateResponseDTO(product);
+    }
+}
 }
