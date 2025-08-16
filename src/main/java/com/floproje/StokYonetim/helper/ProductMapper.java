@@ -20,7 +20,6 @@ public class ProductMapper {
         product.setGender(dto.getGender());
         product.setPrice(dto.getPrice());
         product.setIsForKids(dto.getIsForKids());
-        product.setCategory(dto.getCategory());
 
         return product;
     }

@@ -45,5 +45,5 @@ public class ProductCreateRequestDTO {
     private Boolean isForKids;
 
     @NotNull(message = "Product category must be selected!")
-    private Category category;
+    private CategoryCreateRequestDTO category;
 }

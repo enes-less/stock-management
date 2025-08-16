@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products") //! products diye baslayan butun istekler artik bu controller'da karsilanir.
+@RequestMapping("/product") //! products diye baslayan butun istekler artik bu controller'da karsilanir.
 public class ProductController {
     private final ProductService productService;
 
@@ -25,4 +25,8 @@ public class ProductController {
     public ResponseEntity<ProductCreateResponseDTO> saveProduct(@RequestBody ProductCreateRequestDTO dto){
         return new ResponseEntity<>(productService.saveProduct(dto), HttpStatus.CREATED);
     }
+
+    //findProductById
+    //ipucu @GetMapping("/{id}"),
+    //parametre olarak @PathVariable Long id
 }
