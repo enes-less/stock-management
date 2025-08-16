@@ -27,6 +27,16 @@ public class Product{
 
     private Integer stock;
 
+    private Double size;
+
+    private String color;
+
+    private String gender;
+
+    private Double price;
+
+    private Boolean isForKids;
+
     @ManyToOne
     @JoinColumn(name = "category_id") //! Foreign Key
     private Category category; //Foreign Key sutununun default ismi, field ismi + _id'dir. category_id

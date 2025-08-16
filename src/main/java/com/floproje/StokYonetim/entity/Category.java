@@ -1,5 +1,6 @@
 package com.floproje.StokYonetim.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,5 +22,6 @@ public class Category{
     private String description;
 
     @OneToMany(mappedBy = "category")
+    //@JsonIgnore
     private List<Product> products;
 }

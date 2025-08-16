@@ -19,5 +19,15 @@ public class ProductCreateResponseDTO {
 
     private Integer stock;
 
+    private Double size;
+
+    private String color;
+
+    private String gender;
+
+    private Double price;
+
+    private Boolean isForKids;
+
     private Category category;
 }
