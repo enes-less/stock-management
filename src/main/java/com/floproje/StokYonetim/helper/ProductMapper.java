@@ -1,7 +1,9 @@
 package com.floproje.StokYonetim.helper;
 
 import com.floproje.StokYonetim.dto.ProductCreateRequestDTO;
-import com.floproje.StokYonetim.dto.ProductCreateResponseDTO;
+import com.floproje.StokYonetim.dto.ProductResponseDTO;
+import com.floproje.StokYonetim.dto.ProductUpdateRequestDTO;
+import com.floproje.StokYonetim.entity.Category;
 import com.floproje.StokYonetim.entity.Product;
 import org.springframework.stereotype.Component;
 
@@ -24,9 +26,9 @@ public class ProductMapper {
         return product;
     }
 
-    //Product -> ProductCreateResponseDTO
-    public ProductCreateResponseDTO mapProductToProductCreateResponseDTO(Product product){
-        ProductCreateResponseDTO dto = new ProductCreateResponseDTO();
+    //Product -> ProductResponseDTO
+    public ProductResponseDTO mapProductToProductResponseDTO(Product product){
+        ProductResponseDTO dto = new ProductResponseDTO();
         dto.setId(product.getId());
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
@@ -39,5 +41,24 @@ public class ProductMapper {
         dto.setCategory(product.getCategory());
 
         return dto;
+    }
+
+    //ProductUpdateRequestDTO -> Product / Replace fields
+    public Product mapProductUpdateRequestDTOToUpadtedProduct(Product toBeUpdated,
+                                                              ProductUpdateRequestDTO dto,
+                                                              Category foundCategory){
+        toBeUpdated.setName(dto.getName());
+        toBeUpdated.setDescription(dto.getDescription());
+        toBeUpdated.setStock(dto.getStock());
+        toBeUpdated.setSize(dto.getSize());
+        toBeUpdated.setColor(dto.getColor());
+        toBeUpdated.setGender(dto.getGender());
+        toBeUpdated.setPrice(dto.getPrice());
+        toBeUpdated.setIsForKids(dto.getIsForKids());
+        //KATEGORI ICIN NE YAPACAGIZ???
+        //toBeUpdated.setCategory(dto.getCategory());
+        toBeUpdated.setCategory(foundCategory);
+
+        return toBeUpdated;
     }
 }

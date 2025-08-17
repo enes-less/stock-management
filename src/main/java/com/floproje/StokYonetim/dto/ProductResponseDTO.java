@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductCreateResponseDTO {
+public class ProductResponseDTO {
     private Long id;
 
     private String name;
