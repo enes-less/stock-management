@@ -15,4 +15,22 @@ public class UserService {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found with given username: " + username));
     }
+    //yeni eklenen metodlar aşağıda
+    public User findById(Long id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("No user found with id: " + id));
+    }
+
+    // Tüm kullanıcıları listele
+    public List<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    // Kullanıcı silme
+    public void deleteById(Long id){
+        if(!userRepository.existsById(id)){
+            throw new UsernameNotFoundException("No user found with id: " + id);
+        }
+        userRepository.deleteById(id);
+    }
 }
