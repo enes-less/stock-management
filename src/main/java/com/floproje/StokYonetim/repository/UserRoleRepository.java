@@ -5,7 +5,6 @@ import com.floproje.StokYonetim.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
-//authservice için
 public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
     Optional<UserRole> findByRole(Role role);
 }

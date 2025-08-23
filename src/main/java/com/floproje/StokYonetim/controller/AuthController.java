@@ -1,7 +1,7 @@
 package com.floproje.StokYonetim.controller;
 
-import com.floproje.StokYonetim.dto.LoginRequest;
-import com.floproje.StokYonetim.dto.RegisterRequest;
+import com.floproje.StokYonetim.dto.UserLoginRequestDTO;
+import com.floproje.StokYonetim.dto.UserRegisterRequestDTO;
 import com.floproje.StokYonetim.security.service.AuthService; // düzeltildi
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +16,15 @@ public class AuthController {
 
     // giriş endpointi
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest request) {
-        String token = authService.login(request);
+    public ResponseEntity<String> login(@RequestBody UserLoginRequestDTO dto) {
+        String token = authService.login(dto);
         return ResponseEntity.ok(token);
     }
 
     // kayıt endpointi
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
-        authService.register(request);
+    public ResponseEntity<String> register(@RequestBody UserRegisterRequestDTO dto) {
+        authService.register(dto);
         return ResponseEntity.ok("User registered successfully");
     }
 }

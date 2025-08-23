@@ -1,12 +1,15 @@
 package com.floproje.StokYonetim.security.service;
-import com.floproje.StokYonetim.dto.LoginRequest;
-import com.floproje.StokYonetim.dto.RegisterRequest;
+
+import com.floproje.StokYonetim.dto.UserLoginRequestDTO;
+import com.floproje.StokYonetim.dto.UserRegisterRequestDTO;
 import com.floproje.StokYonetim.entity.User;
 import com.floproje.StokYonetim.entity.UserRole;
 import com.floproje.StokYonetim.enums.Role;
-import com.floproje.StokYonetim.repository.UserRepository;
-import com.floproje.StokYonetim.repository.UserRoleRepository;
+import com.floproje.StokYonetim.exception.ConflictException;
+import com.floproje.StokYonetim.exception.EntityNotFoundException;
 import com.floproje.StokYonetim.security.JwtUtils;
+import com.floproje.StokYonetim.service.UserRoleService;
+import com.floproje.StokYonetim.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,13 +23,13 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
-    private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
+    private final UserService userService;
+    private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
 
     // Kullanıcı login olur ve authenticationManager ile doğrulama yapılır
     // Eğer kullanıcı adı/şifre doğruysa JWT token üretilir
-    public String login(LoginRequest request) {
+    public String login(UserLoginRequestDTO request) {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
@@ -34,27 +37,25 @@ public class AuthService {
     }
 
     // Yeni kullanıcı kaydı -> default olarak PERSONNEL rolü atanır
-    public void register(RegisterRequest req) {
+    public void register(UserRegisterRequestDTO dto) {
         // Eğer aynı kullanıcı adı varsa hata fırlat
-        userRepository.findByUsername(req.getUsername()).ifPresent(u -> {
-            throw new RuntimeException("Username already exists");
-        });
+        if (userService.findByUsername(dto.getUsername()) != null){
+            throw new ConflictException("A user exists with given username: " + dto.getUsername());
+        }
 
         // Yeni kullanıcı nesnesi oluştur
         User user = new User();
-        user.setUsername(req.getUsername());
-        user.setPassword(passwordEncoder.encode(req.getPassword()));
+        user.setUsername(dto.getUsername());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setPhoneNumber(dto.getPhoneNumber());
+        user.setEmail(dto.getEmail());
 
-        // Default rol: PERSONNEL
-        UserRole role = userRoleRepository.findByRole(Role.PERSONNEL)
-                .orElseGet(() -> {
-                    UserRole r = new UserRole();
-                    r.setRole(Role.PERSONNEL);
-                    return userRoleRepository.save(r);
-                });
+        //Defualt role: PERSONNEL
+        UserRole userRole = userRoleService.findByRole(Role.PERSONNEL);
+        user.setUserRole(userRole);
 
-        user.setUserRole(role);
-
-        userRepository.save(user);
+        userService.saveUser(user);
     }
 }

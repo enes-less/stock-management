@@ -6,6 +6,7 @@ import com.floproje.StokYonetim.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,12 +15,8 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @GetMapping
-    public ResponseEntity<String> helloWorld(){
-        return ResponseEntity.ok("Hello World!"); //200 OK
-    }
-
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<CategoryCreateResponseDTO> saveCategory(@RequestBody CategoryCreateRequestDTO dto) {
         return new ResponseEntity<>(categoryService.saveCategory(dto), HttpStatus.CREATED);
     }
