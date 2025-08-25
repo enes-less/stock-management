@@ -16,6 +16,9 @@ public class ProductMapper {
         Product product = new Product();
         product.setName(dto.getName());
         product.setDescription(dto.getDescription());
+        product.setInitialStock(dto.getStock());
+        product.setRop(dto.getRop());
+        product.setSku(dto.getSku());
         product.setStock(dto.getStock());
         product.setSize(dto.getSize());
         product.setColor(dto.getColor());
@@ -32,7 +35,10 @@ public class ProductMapper {
         dto.setId(product.getId());
         dto.setName(product.getName());
         dto.setDescription(product.getDescription());
+        dto.setInitialStock(product.getInitialStock());
         dto.setStock(product.getStock());
+        dto.setRop(product.getRop());
+        dto.setSku(product.getSku());
         dto.setSize(product.getSize());
         dto.setColor(product.getColor());
         dto.setGender(product.getGender());
@@ -50,6 +56,8 @@ public class ProductMapper {
         toBeUpdated.setName(dto.getName());
         toBeUpdated.setDescription(dto.getDescription());
         toBeUpdated.setStock(dto.getStock());
+        toBeUpdated.setRop(dto.getRop());
+        toBeUpdated.setSku(dto.getSku());
         toBeUpdated.setSize(dto.getSize());
         toBeUpdated.setColor(dto.getColor());
         toBeUpdated.setGender(dto.getGender());

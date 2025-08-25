@@ -17,7 +17,13 @@ public class ProductResponseDTO {
 
     private String description;
 
+    private Integer initialStock;
+
     private Integer stock;
+
+    private Integer rop;
+
+    private String sku;
 
     private Double size;
 

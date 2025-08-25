@@ -113,6 +113,44 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+    public Map<String, Object> findTotalProductCount() {
+        long totalProductCount = productRepository.count();
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("totalProductCount", totalProductCount);
+
+        return map;
+    }
+
+    public Map<String, Object> findTotalStockCount() {
+        Long totalStockCount = productRepository.getTotalStock();
+
+        if (totalStockCount == null){
+            totalStockCount = 0L;
+        }
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("totalStockCount", totalStockCount);
+
+        return map;
+    }
+
+    public Map<String, Object> findLowStockProducts() {
+        List<Product> lowStockProducts = productRepository.findLowStockProducts();
+
+        List<ProductResponseDTO> lowStockProductList = lowStockProducts
+                .stream().map(productMapper::mapProductToProductResponseDTO).toList();
+
+        Map<String, Object> map = new HashMap<>();
+
+        //map.put("lowStockCount", lowStockProductList.size());
+        map.put("lowStockProducts", lowStockProductList);
+
+        return map;
+    }
+
     //Alternatif:
     /*
     public ProductResponseDTO deleteProductById(Long id) {

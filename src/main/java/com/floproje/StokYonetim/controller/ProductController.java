@@ -46,6 +46,24 @@ public class ProductController {
         return ResponseEntity.ok(productService.findAllProducts(page - 1, size, sortBy, order));
     }
 
+    @GetMapping("/all-products")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'PERSONNEL')")
+    public ResponseEntity<Map<String, Object>> getTotalProductCount(){
+        return ResponseEntity.ok(productService.findTotalProductCount());
+    }
+
+    @GetMapping("/all-stock")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'PERSONNEL')")
+    public ResponseEntity<Map<String, Object>> getTotalStockCount(){
+        return ResponseEntity.ok(productService.findTotalStockCount());
+    }
+
+    @GetMapping("/low-stock")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER', 'PERSONNEL')")
+    public ResponseEntity<Map<String, Object>> getLowStockProducts(){
+        return ResponseEntity.ok(productService.findLowStockProducts());
+    }
+
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'MANAGER')")
     public ResponseEntity<ProductResponseDTO> updateProductById(@PathVariable Long id,

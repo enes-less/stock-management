@@ -37,6 +37,6 @@ public class CategoryService {
 
     public Category findByName(String name){
         return categoryRepository.findByName(name).orElseThrow(() ->
-                new EntityNotFoundException("No category found with given ID: " + name));
+                new EntityNotFoundException("No category found with given name: " + name));
     }
 }

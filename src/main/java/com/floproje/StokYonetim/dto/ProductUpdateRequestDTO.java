@@ -25,6 +25,15 @@ public class ProductUpdateRequestDTO {
     @NotNull(message = "Stock must be entered!")
     private Integer stock;
 
+    @Max(value = 50, message = "ROP percentage cannot exceed 50%.")
+    @Min(value = 5, message = "ROP percentage cannot be lower than 5%.")
+    @NotNull(message = "ROP must be entered!")
+    private Integer rop;
+
+    @NotBlank(message = "SKU cannot be empty!")
+    @Length(min = 8, max = 32, message = "SKU must be between ${min}-${max} characters.")
+    private String sku;
+
     @NotNull(message = "Size cannot be empty!")
     private Double size;
 
