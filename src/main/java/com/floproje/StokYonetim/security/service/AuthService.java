@@ -17,8 +17,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.security.PermitAll;
-
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -39,7 +37,6 @@ public class AuthService {
     }
 
     // Yeni kullanıcı kaydı -> default olarak PERSONNEL rolü atanır
-    @PermitAll
     public void register(UserRegisterRequestDTO dto) {
         // Eğer aynı kullanıcı adı varsa hata fırlat
         try {

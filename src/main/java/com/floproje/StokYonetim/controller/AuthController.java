@@ -2,12 +2,11 @@ package com.floproje.StokYonetim.controller;
 
 import com.floproje.StokYonetim.dto.UserLoginRequestDTO;
 import com.floproje.StokYonetim.dto.UserRegisterRequestDTO;
-import com.floproje.StokYonetim.security.service.AuthService; // düzeltildi
+import com.floproje.StokYonetim.security.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 @RestController
@@ -19,7 +18,6 @@ public class AuthController {
 
     // giriş endpointi
     @PostMapping("/login")
-    @PermitAll
     public ResponseEntity<String> login(@Valid @RequestBody UserLoginRequestDTO dto) {
         String token = authService.login(dto);
         return ResponseEntity.ok(token);
@@ -27,7 +25,6 @@ public class AuthController {
 
     // kayıt endpointi
     @PostMapping("/register")
-    @PermitAll
     public ResponseEntity<String> register(@Valid @RequestBody UserRegisterRequestDTO dto) {
         System.out.println("REGISTER GELDI");
         authService.register(dto);
