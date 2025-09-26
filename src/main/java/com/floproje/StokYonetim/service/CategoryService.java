@@ -9,6 +9,8 @@ import com.floproje.StokYonetim.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryService {
@@ -38,5 +40,9 @@ public class CategoryService {
     public Category findByName(String name){
         return categoryRepository.findByName(name).orElseThrow(() ->
                 new EntityNotFoundException("No category found with given name: " + name));
+    }
+
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
     }
 }
