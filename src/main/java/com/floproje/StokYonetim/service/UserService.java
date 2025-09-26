@@ -3,6 +3,7 @@ package com.floproje.StokYonetim.service;
 import com.floproje.StokYonetim.dto.UserCreateRequestDTO;
 import com.floproje.StokYonetim.entity.User;
 import com.floproje.StokYonetim.enums.Role;
+import com.floproje.StokYonetim.exception.EntityNotFoundException;
 import com.floproje.StokYonetim.exception.NotPermittedActionException;
 import com.floproje.StokYonetim.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.PermitAll;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,18 +26,20 @@ public class UserService {
 
     public void saveUser(UserCreateRequestDTO dto){}
 
+    @PermitAll
     public void saveUser(User user){
         userRepository.save(user);
     }
 
     public User findByUsername(String username){
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("No user found with given username: " + username));
+                .orElseThrow(() -> new EntityNotFoundException("No user found with given username: " + username));
     }
+
     //yeni eklenen metodlar aşağıda
     public User findById(Long id){
         return userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("No user found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No user found with id: " + id));
     }
 
     // Tüm kullanıcıları listele !!PAGINATION LAZIM

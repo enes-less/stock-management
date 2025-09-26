@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -16,14 +19,17 @@ public class AuthController {
 
     // giriş endpointi
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequestDTO dto) {
+    @PermitAll
+    public ResponseEntity<String> login(@Valid @RequestBody UserLoginRequestDTO dto) {
         String token = authService.login(dto);
         return ResponseEntity.ok(token);
     }
 
     // kayıt endpointi
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserRegisterRequestDTO dto) {
+    @PermitAll
+    public ResponseEntity<String> register(@Valid @RequestBody UserRegisterRequestDTO dto) {
+        System.out.println("REGISTER GELDI");
         authService.register(dto);
         return ResponseEntity.ok("User registered successfully");
     }

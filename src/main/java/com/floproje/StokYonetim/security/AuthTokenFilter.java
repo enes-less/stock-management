@@ -36,6 +36,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
+        String path = request.getServletPath();
+        // auth (login/register) tamamen serbest
+        if (path.startsWith("/auth/")) {
+            System.err.println("AUTH ILE BASLAYAN ISTEK");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             // Preflight isteği; sakince geç
             filterChain.doFilter(request, response);

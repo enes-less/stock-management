@@ -17,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.security.PermitAll;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -37,10 +39,14 @@ public class AuthService {
     }
 
     // Yeni kullanıcı kaydı -> default olarak PERSONNEL rolü atanır
+    @PermitAll
     public void register(UserRegisterRequestDTO dto) {
         // Eğer aynı kullanıcı adı varsa hata fırlat
-        if (userService.findByUsername(dto.getUsername()) != null){
-            throw new ConflictException("A user exists with given username: " + dto.getUsername());
+        try {
+            if (userService.findByUsername(dto.getUsername()) != null){
+                throw new ConflictException("A user with username: " + dto.getUsername() + " already exists.");
+            }
+        } catch (EntityNotFoundException ignored) {
         }
 
         // Yeni kullanıcı nesnesi oluştur
@@ -55,7 +61,6 @@ public class AuthService {
         //Defualt role: PERSONNEL
         UserRole userRole = userRoleService.findByRole(Role.PERSONNEL);
         user.setUserRole(userRole);
-
         userService.saveUser(user);
     }
 }
